@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -7,11 +8,18 @@ public class Main {
         String op;
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Please enter first number: ");
-            num1 = scanner.nextFloat();
-            System.out.println("Please enter second number: ");
-            num2 = scanner.nextFloat();
 
+            try {
+                System.out.println("Please enter first number: ");
+                num1 = scanner.nextFloat();
+                System.out.println("Please enter second number: ");
+                num2 = scanner.nextFloat();
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Please enter a right thing");
+                scanner.next();
+                continue;
+            }
             System.out.println("Please enter operation: ");
             op = scanner.next();
 
@@ -37,14 +45,19 @@ public class Main {
                     System.out.println("Unknown operation");
             };
 
-            System.out.println("Do you want continue?");
-            String answer = scanner.next();
-            if (answer.equalsIgnoreCase("yes")) {
-                continue;
-            }
-            if (answer.equalsIgnoreCase("no")) {
-                scanner.close();
-                break;
+            while (true) {
+                System.out.println("Do you want continue?");
+                String answer = scanner.next();
+                if (answer.equalsIgnoreCase("yes")) {
+                    break;
+                }
+                else if (answer.equalsIgnoreCase("no")) {
+                    scanner.close();
+                    return;
+                }
+                else {
+                    System.out.println("Unknown input");
+                }
             }
         }
     }
